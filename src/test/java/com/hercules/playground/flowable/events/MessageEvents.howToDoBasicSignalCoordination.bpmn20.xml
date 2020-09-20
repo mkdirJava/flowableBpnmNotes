@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <signal id="StartPizzaMarking" name="StartPizzaMarking" flowable:scope="global"></signal>
+  <signal id="DeliverPizza" name="DeliverPizza" flowable:scope="global"></signal>
+  <message id="OrderedPizza" name="OrderedPizza"></message>
+  <process id="messageEvents" name="messageEvents" isExecutable="true">
+    <startEvent id="startEvent1" flowable:formFieldValidation="true"></startEvent>
+    <userTask id="sid-A9ED89A6-B9CD-4AB6-9C5E-BF313A214A69" name="Order Pizza" flowable:formFieldValidation="true"></userTask>
+    <sequenceFlow id="sid-AF185428-FD84-40B6-9182-0F7628E8D117" sourceRef="startEvent1" targetRef="sid-A9ED89A6-B9CD-4AB6-9C5E-BF313A214A69"></sequenceFlow>
+    <userTask id="sid-30C134CC-8E63-488A-B911-029FC8406C5B" name="Eat Pizza" flowable:formFieldValidation="true"></userTask>
+    <endEvent id="sid-D6B65385-4AB9-4B23-9C89-20303D149191"></endEvent>
+    <sequenceFlow id="sid-8DB00078-9E3D-4984-BCE1-6ADE1DFF98FD" sourceRef="sid-30C134CC-8E63-488A-B911-029FC8406C5B" targetRef="sid-D6B65385-4AB9-4B23-9C89-20303D149191"></sequenceFlow>
+    <boundaryEvent id="sid-ED574641-E417-4961-A81D-8525FEB61AFD" attachedToRef="sid-A9ED89A6-B9CD-4AB6-9C5E-BF313A214A69" cancelActivity="false">
+      <messageEventDefinition messageRef="OrderedPizza"></messageEventDefinition>
+    </boundaryEvent>
+    <userTask id="sid-C2E4260D-62E3-4BF6-84AC-50F67DAB046B" name="Cook and deliver pizza" flowable:formFieldValidation="true"></userTask>
+    <sequenceFlow id="sid-9F440AEF-6298-4A4A-8336-868D57D0E2EF" sourceRef="sid-ED574641-E417-4961-A81D-8525FEB61AFD" targetRef="sid-C2E4260D-62E3-4BF6-84AC-50F67DAB046B"></sequenceFlow>
+    <subProcess id="sid-96767EC1-CB3C-4960-89C6-BBD77483D6AA" name="Signal Difference
+" triggeredByEvent="true">
+      <startEvent id="sid-DD6B2F12-F2FD-4689-AECD-C844F2E6D6E7" isInterrupting="false">
+        <signalEventDefinition signalRef="StartPizzaMarking"></signalEventDefinition>
+      </startEvent>
+      <userTask id="sid-DAF1DDFD-09D3-43DD-B7BB-911F56A69C45" name="Start Making Pizza" flowable:formFieldValidation="true"></userTask>
+      <intermediateCatchEvent id="sid-E06D4E29-983A-4E2C-8417-55DE20EEA85B">
+        <signalEventDefinition signalRef="DeliverPizza"></signalEventDefinition>
+      </intermediateCatchEvent>
+      <endEvent id="sid-AFB17327-0EE4-4CBD-A5F1-A7154B7255C2"></endEvent>
+      <sequenceFlow id="sid-0071F1A6-25B0-439B-B48E-1E71F3F99264" sourceRef="sid-DD6B2F12-F2FD-4689-AECD-C844F2E6D6E7" targetRef="sid-DAF1DDFD-09D3-43DD-B7BB-911F56A69C45"></sequenceFlow>
+      <sequenceFlow id="sid-794D1C37-5A19-48FC-B39D-B941CC0865E6" sourceRef="sid-DAF1DDFD-09D3-43DD-B7BB-911F56A69C45" targetRef="sid-E06D4E29-983A-4E2C-8417-55DE20EEA85B"></sequenceFlow>
+      <sequenceFlow id="sid-F5B749C1-F297-46C3-A23A-DB69A5F71D57" sourceRef="sid-E06D4E29-983A-4E2C-8417-55DE20EEA85B" targetRef="sid-AFB17327-0EE4-4CBD-A5F1-A7154B7255C2"></sequenceFlow>
+    </subProcess>
+    <intermediateCatchEvent id="sid-168F73F8-31E7-4CE3-A2E6-1A515EE6B677">
+      <signalEventDefinition signalRef="DeliverPizza"></signalEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="sid-ADBBB728-615B-4FFB-8850-7867B44B96A6" sourceRef="sid-A9ED89A6-B9CD-4AB6-9C5E-BF313A214A69" targetRef="sid-168F73F8-31E7-4CE3-A2E6-1A515EE6B677"></sequenceFlow>
+    <endEvent id="sid-F3300F6F-0F4B-426F-AAE3-B3488039B6F7"></endEvent>
+    <intermediateThrowEvent id="sid-A67567CC-4A0E-47EE-9AF3-B77F7102184E">
+      <signalEventDefinition signalRef="DeliverPizza"></signalEventDefinition>
+    </intermediateThrowEvent>
+    <sequenceFlow id="sid-2418A52F-1164-416B-AD84-90741CB52E6E" sourceRef="sid-C2E4260D-62E3-4BF6-84AC-50F67DAB046B" targetRef="sid-A67567CC-4A0E-47EE-9AF3-B77F7102184E"></sequenceFlow>
+    <sequenceFlow id="sid-36DB8CEE-6734-4205-A53B-533841364CEE" sourceRef="sid-A67567CC-4A0E-47EE-9AF3-B77F7102184E" targetRef="sid-F3300F6F-0F4B-426F-AAE3-B3488039B6F7"></sequenceFlow>
+    <sequenceFlow id="sid-3EC0160A-849A-41A7-9669-2AC1D849FC8C" sourceRef="sid-168F73F8-31E7-4CE3-A2E6-1A515EE6B677" targetRef="sid-30C134CC-8E63-488A-B911-029FC8406C5B"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_messageEvents">
+    <bpmndi:BPMNPlane bpmnElement="messageEvents" id="BPMNPlane_messageEvents">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="255.0" y="373.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-A9ED89A6-B9CD-4AB6-9C5E-BF313A214A69" id="BPMNShape_sid-A9ED89A6-B9CD-4AB6-9C5E-BF313A214A69">
+        <omgdc:Bounds height="80.0" width="100.0" x="330.0" y="348.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-30C134CC-8E63-488A-B911-029FC8406C5B" id="BPMNShape_sid-30C134CC-8E63-488A-B911-029FC8406C5B">
+        <omgdc:Bounds height="80.0" width="100.0" x="590.0" y="348.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-D6B65385-4AB9-4B23-9C89-20303D149191" id="BPMNShape_sid-D6B65385-4AB9-4B23-9C89-20303D149191">
+        <omgdc:Bounds height="28.0" width="28.0" x="740.0" y="374.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-ED574641-E417-4961-A81D-8525FEB61AFD" id="BPMNShape_sid-ED574641-E417-4961-A81D-8525FEB61AFD">
+        <omgdc:Bounds height="30.0" width="30.0" x="371.71371539355533" y="332.71770763866783"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-C2E4260D-62E3-4BF6-84AC-50F67DAB046B" id="BPMNShape_sid-C2E4260D-62E3-4BF6-84AC-50F67DAB046B">
+        <omgdc:Bounds height="80.0" width="100.0" x="438.8493699136011" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-96767EC1-CB3C-4960-89C6-BBD77483D6AA" id="BPMNShape_sid-96767EC1-CB3C-4960-89C6-BBD77483D6AA">
+        <omgdc:Bounds height="220.0" width="528.0" x="240.0" y="465.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-DD6B2F12-F2FD-4689-AECD-C844F2E6D6E7" id="BPMNShape_sid-DD6B2F12-F2FD-4689-AECD-C844F2E6D6E7">
+        <omgdc:Bounds height="30.0" width="30.0" x="270.0" y="560.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-DAF1DDFD-09D3-43DD-B7BB-911F56A69C45" id="BPMNShape_sid-DAF1DDFD-09D3-43DD-B7BB-911F56A69C45">
+        <omgdc:Bounds height="80.0" width="100.0" x="345.0" y="535.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-E06D4E29-983A-4E2C-8417-55DE20EEA85B" id="BPMNShape_sid-E06D4E29-983A-4E2C-8417-55DE20EEA85B">
+        <omgdc:Bounds height="30.0" width="30.0" x="495.0" y="560.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-AFB17327-0EE4-4CBD-A5F1-A7154B7255C2" id="BPMNShape_sid-AFB17327-0EE4-4CBD-A5F1-A7154B7255C2">
+        <omgdc:Bounds height="28.0" width="28.0" x="570.0" y="561.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-168F73F8-31E7-4CE3-A2E6-1A515EE6B677" id="BPMNShape_sid-168F73F8-31E7-4CE3-A2E6-1A515EE6B677">
+        <omgdc:Bounds height="30.0" width="30.0" x="460.0" y="373.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-F3300F6F-0F4B-426F-AAE3-B3488039B6F7" id="BPMNShape_sid-F3300F6F-0F4B-426F-AAE3-B3488039B6F7">
+        <omgdc:Bounds height="28.0" width="28.0" x="626.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-A67567CC-4A0E-47EE-9AF3-B77F7102184E" id="BPMNShape_sid-A67567CC-4A0E-47EE-9AF3-B77F7102184E">
+        <omgdc:Bounds height="30.0" width="30.0" x="569.0" y="235.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-8DB00078-9E3D-4984-BCE1-6ADE1DFF98FD" id="BPMNEdge_sid-8DB00078-9E3D-4984-BCE1-6ADE1DFF98FD">
+        <omgdi:waypoint x="689.9499999998662" y="388.0"></omgdi:waypoint>
+        <omgdi:waypoint x="740.0" y="388.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-ADBBB728-615B-4FFB-8850-7867B44B96A6" id="BPMNEdge_sid-ADBBB728-615B-4FFB-8850-7867B44B96A6">
+        <omgdi:waypoint x="429.9499999998807" y="388.0"></omgdi:waypoint>
+        <omgdi:waypoint x="460.0" y="388.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-9F440AEF-6298-4A4A-8336-868D57D0E2EF" id="BPMNEdge_sid-9F440AEF-6298-4A4A-8336-868D57D0E2EF">
+        <omgdi:waypoint x="386.71371539355533" y="332.71770763866783"></omgdi:waypoint>
+        <omgdi:waypoint x="386.7137153935554" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="438.8493699136011" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-0071F1A6-25B0-439B-B48E-1E71F3F99264" id="BPMNEdge_sid-0071F1A6-25B0-439B-B48E-1E71F3F99264">
+        <omgdi:waypoint x="299.9499984899576" y="575.0"></omgdi:waypoint>
+        <omgdi:waypoint x="345.0" y="575.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-2418A52F-1164-416B-AD84-90741CB52E6E" id="BPMNEdge_sid-2418A52F-1164-416B-AD84-90741CB52E6E">
+        <omgdi:waypoint x="538.7993699135636" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="569.0" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-AF185428-FD84-40B6-9182-0F7628E8D117" id="BPMNEdge_sid-AF185428-FD84-40B6-9182-0F7628E8D117">
+        <omgdi:waypoint x="284.9499984899576" y="388.0"></omgdi:waypoint>
+        <omgdi:waypoint x="329.9999999999917" y="388.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-F5B749C1-F297-46C3-A23A-DB69A5F71D57" id="BPMNEdge_sid-F5B749C1-F297-46C3-A23A-DB69A5F71D57">
+        <omgdi:waypoint x="524.9499966648513" y="575.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="575.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-3EC0160A-849A-41A7-9669-2AC1D849FC8C" id="BPMNEdge_sid-3EC0160A-849A-41A7-9669-2AC1D849FC8C">
+        <omgdi:waypoint x="489.94999932866256" y="388.0"></omgdi:waypoint>
+        <omgdi:waypoint x="589.999999999797" y="388.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-794D1C37-5A19-48FC-B39D-B941CC0865E6" id="BPMNEdge_sid-794D1C37-5A19-48FC-B39D-B941CC0865E6">
+        <omgdi:waypoint x="444.9499999996112" y="575.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="575.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-36DB8CEE-6734-4205-A53B-533841364CEE" id="BPMNEdge_sid-36DB8CEE-6734-4205-A53B-533841364CEE">
+        <omgdi:waypoint x="598.9499941787609" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="626.0" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

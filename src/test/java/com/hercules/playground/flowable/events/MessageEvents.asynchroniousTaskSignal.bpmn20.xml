@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <signal id="startASubTaskProcess" name="startASubTaskProcess" flowable:scope="processInstance"></signal>
+  <signal id="startASubTaskGlobal" name="startASubTaskGlobal" flowable:scope="global"></signal>
+  <process id="asynchroniousTaskSignal" name="asynchroniousTaskSignal" isExecutable="true">
+    <startEvent id="startEvent1" flowable:formFieldValidation="true"></startEvent>
+    <userTask id="sid-4C585C9F-D2FC-469F-BDAB-E7866DB55375" name="Step 1" flowable:formFieldValidation="true"></userTask>
+    <sequenceFlow id="sid-B7A294F7-DF78-43A4-A33C-09C6E4DC396F" sourceRef="startEvent1" targetRef="sid-4C585C9F-D2FC-469F-BDAB-E7866DB55375"></sequenceFlow>
+    <endEvent id="sid-F81E7608-A75B-4167-BD01-A5291770E0EB"></endEvent>
+    <sequenceFlow id="sid-B81E8881-3D49-4AD3-9797-C6C4081D2B4E" sourceRef="sid-4C585C9F-D2FC-469F-BDAB-E7866DB55375" targetRef="sid-F81E7608-A75B-4167-BD01-A5291770E0EB"></sequenceFlow>
+    <subProcess id="sid-6E55F2A0-4D30-4298-AE0C-0297AEBD6FA1" name="Async process kicked off by global scoped event" triggeredByEvent="true">
+      <startEvent id="sid-5CF3F8B5-EBEC-4464-AC3F-A91739AEB720" isInterrupting="false">
+        <signalEventDefinition signalRef="startASubTaskGlobal"></signalEventDefinition>
+      </startEvent>
+      <userTask id="sid-8210F488-AAEE-4B4C-BA5F-CB8A7C165A5D" name="Async event Global" flowable:formFieldValidation="true"></userTask>
+      <endEvent id="sid-2040A06A-198D-46CF-A95F-1C8895496361"></endEvent>
+      <sequenceFlow id="sid-96821223-6513-4768-B6E3-5297698E0032" sourceRef="sid-5CF3F8B5-EBEC-4464-AC3F-A91739AEB720" targetRef="sid-8210F488-AAEE-4B4C-BA5F-CB8A7C165A5D"></sequenceFlow>
+      <sequenceFlow id="sid-BDCAECA6-6B83-4999-8A31-48E3DD6206DD" sourceRef="sid-8210F488-AAEE-4B4C-BA5F-CB8A7C165A5D" targetRef="sid-2040A06A-198D-46CF-A95F-1C8895496361"></sequenceFlow>
+    </subProcess>
+    <subProcess id="sid-5D44CF16-6268-4E12-913C-F6420677E01C" name="Async process kicked off by Process scoped event" triggeredByEvent="true">
+      <startEvent id="sid-F5B3D989-1EBC-455B-BBB8-8AD3DE35FC39" isInterrupting="false">
+        <signalEventDefinition signalRef="startASubTaskProcess"></signalEventDefinition>
+      </startEvent>
+      <userTask id="sid-63136F3B-0F8B-4077-9E35-6D7464EFE7F3" name="Async event Process" flowable:formFieldValidation="true"></userTask>
+      <endEvent id="sid-5FAC475D-967F-4991-9D8B-EC03DE6FF546"></endEvent>
+      <sequenceFlow id="sid-114C6710-4F5D-40F4-B74B-81D2CBFCED54" sourceRef="sid-F5B3D989-1EBC-455B-BBB8-8AD3DE35FC39" targetRef="sid-63136F3B-0F8B-4077-9E35-6D7464EFE7F3"></sequenceFlow>
+      <sequenceFlow id="sid-CCD2C2C6-B833-43EF-8F05-F63F4C3068D5" sourceRef="sid-63136F3B-0F8B-4077-9E35-6D7464EFE7F3" targetRef="sid-5FAC475D-967F-4991-9D8B-EC03DE6FF546"></sequenceFlow>
+    </subProcess>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_asynchroniousTaskSignal">
+    <bpmndi:BPMNPlane bpmnElement="asynchroniousTaskSignal" id="BPMNPlane_asynchroniousTaskSignal">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="151.0" y="163.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-4C585C9F-D2FC-469F-BDAB-E7866DB55375" id="BPMNShape_sid-4C585C9F-D2FC-469F-BDAB-E7866DB55375">
+        <omgdc:Bounds height="80.0" width="100.0" x="226.0" y="138.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-F81E7608-A75B-4167-BD01-A5291770E0EB" id="BPMNShape_sid-F81E7608-A75B-4167-BD01-A5291770E0EB">
+        <omgdc:Bounds height="28.0" width="28.0" x="371.0" y="164.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-6E55F2A0-4D30-4298-AE0C-0297AEBD6FA1" id="BPMNShape_sid-6E55F2A0-4D30-4298-AE0C-0297AEBD6FA1">
+        <omgdc:Bounds height="151.0" width="325.0" x="135.0" y="297.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-5CF3F8B5-EBEC-4464-AC3F-A91739AEB720" id="BPMNShape_sid-5CF3F8B5-EBEC-4464-AC3F-A91739AEB720">
+        <omgdc:Bounds height="30.0" width="30.0" x="150.0" y="362.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-8210F488-AAEE-4B4C-BA5F-CB8A7C165A5D" id="BPMNShape_sid-8210F488-AAEE-4B4C-BA5F-CB8A7C165A5D">
+        <omgdc:Bounds height="80.0" width="100.0" x="225.0" y="337.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-2040A06A-198D-46CF-A95F-1C8895496361" id="BPMNShape_sid-2040A06A-198D-46CF-A95F-1C8895496361">
+        <omgdc:Bounds height="28.0" width="28.0" x="370.0" y="363.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-5D44CF16-6268-4E12-913C-F6420677E01C" id="BPMNShape_sid-5D44CF16-6268-4E12-913C-F6420677E01C">
+        <omgdc:Bounds height="158.0" width="321.0" x="135.0" y="480.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-F5B3D989-1EBC-455B-BBB8-8AD3DE35FC39" id="BPMNShape_sid-F5B3D989-1EBC-455B-BBB8-8AD3DE35FC39">
+        <omgdc:Bounds height="30.0" width="30.0" x="150.0" y="545.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-63136F3B-0F8B-4077-9E35-6D7464EFE7F3" id="BPMNShape_sid-63136F3B-0F8B-4077-9E35-6D7464EFE7F3">
+        <omgdc:Bounds height="80.0" width="100.0" x="226.0" y="519.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-5FAC475D-967F-4991-9D8B-EC03DE6FF546" id="BPMNShape_sid-5FAC475D-967F-4991-9D8B-EC03DE6FF546">
+        <omgdc:Bounds height="28.0" width="28.0" x="370.0" y="546.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-CCD2C2C6-B833-43EF-8F05-F63F4C3068D5" id="BPMNEdge_sid-CCD2C2C6-B833-43EF-8F05-F63F4C3068D5">
+        <omgdi:waypoint x="325.94999999999754" y="559.4625"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0002618043764" y="559.8703758117268"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-96821223-6513-4768-B6E3-5297698E0032" id="BPMNEdge_sid-96821223-6513-4768-B6E3-5297698E0032">
+        <omgdi:waypoint x="179.94999848995764" y="377.0"></omgdi:waypoint>
+        <omgdi:waypoint x="225.0" y="377.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B7A294F7-DF78-43A4-A33C-09C6E4DC396F" id="BPMNEdge_sid-B7A294F7-DF78-43A4-A33C-09C6E4DC396F">
+        <omgdi:waypoint x="180.94999848995764" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="225.9999999999917" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-114C6710-4F5D-40F4-B74B-81D2CBFCED54" id="BPMNEdge_sid-114C6710-4F5D-40F4-B74B-81D2CBFCED54">
+        <omgdi:waypoint x="179.94940594726472" y="559.8648702345898"></omgdi:waypoint>
+        <omgdi:waypoint x="225.99999999999568" y="559.4499999999999"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B81E8881-3D49-4AD3-9797-C6C4081D2B4E" id="BPMNEdge_sid-B81E8881-3D49-4AD3-9797-C6C4081D2B4E">
+        <omgdi:waypoint x="325.95000000000005" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="371.0" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-BDCAECA6-6B83-4999-8A31-48E3DD6206DD" id="BPMNEdge_sid-BDCAECA6-6B83-4999-8A31-48E3DD6206DD">
+        <omgdi:waypoint x="324.949999999934" y="377.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="377.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
