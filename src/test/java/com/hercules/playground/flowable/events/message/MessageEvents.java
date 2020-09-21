@@ -1,4 +1,4 @@
-package com.hercules.playground.flowable.events;
+package com.hercules.playground.flowable.events.message;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -51,10 +51,7 @@ public class MessageEvents {
 	public void howToDoBasicSignalCoordination() {
 
 		final String processKey = "messageEvents";
-		final String startPizzaMarkingSignal = "StartPizzaMarking";
-		final String DeliverPizzaSignal = "DeliverPizza";
 		final String orderedPizzaMessageSignal = "OrderedPizza";
-		final String deliveredPizzaMessageSignal = "DeliveredPizza";
 
 		// start off a process
 		ProcessInstance processInstance = this.runtimeService.startProcessInstanceByKey(processKey);
@@ -103,9 +100,6 @@ public class MessageEvents {
 
 		// start off a process
 		ProcessInstance processInstance = this.runtimeService.startProcessInstanceByKey(processKey);
-		Execution startSubTaskExecution = runtimeService.createExecutionQuery()
-				.processInstanceId(processInstance.getId()).messageEventSubscriptionName(startSubTaskSignal)
-				.singleResult();
 		assertTrue(this.taskService.createTaskQuery().active().list().size() == 1);
 
 		this.runtimeService.signalEventReceived(startSubTaskSignal);
