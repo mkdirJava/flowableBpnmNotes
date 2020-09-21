@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.engine.test.Deployment;
 import org.flowable.engine.test.FlowableTest;
@@ -107,7 +108,6 @@ public class Signal {
 		final String processKey = "signalScope";
 		
 		// start off two processes
-		// start off two processes
 		this.runtimeService.startProcessInstanceByKey(processKey);
 		ProcessInstance processInstance = this.runtimeService.startProcessInstanceByKey(processKey);
 		assertEquals(8, this.taskService.createTaskQuery().active().list().size());
@@ -131,7 +131,68 @@ public class Signal {
 				() -> assertEquals(2, processfinalTasksByName.get("Step 3").size()),
 				() -> assertEquals(1, processfinalTasksByName.get("Step 4").size()));
 		
+	}
+	
+	/**
+	 * Question:
+	 * 
+	 * Can we trigger global scope signals with the api?
+	 * 
+	 * Answear:
+	 * Yes
+	 * 
+	 */	
+	@Deployment
+	@Test
+	public void signalGlobalScopeApi() {
+
+		final String processKey = "signalScope";
 		
+		// start off two processes
+		this.runtimeService.startProcessInstanceByKey(processKey);
+		this.runtimeService.startProcessInstanceByKey(processKey);
+		assertEquals(4, this.taskService.createTaskQuery().active().list().size());
+		
+		// complete two tasks to ready for the api to be called  and responses asserted 
+		this.taskService.createTaskQuery().active().list().parallelStream()
+				.forEach((task) -> this.taskService.complete(task.getId()));
+		
+		this.runtimeService.signalEventReceived("globaleScope");
+
+		assertEquals(2, this.taskService.createTaskQuery().active().list().size());
+		
+	}
+	
+	/**
+	 * Question:
+	 * 
+	 * Can we trigger Process scope signals with the api?
+	 * 
+	 * Answear:
+	 * No
+	 * 
+	 */
+	@Deployment
+	@Test
+	public void signalProcessScopeApi() {
+
+		final String processKey = "signalScope";
+		
+		// start off two processes
+		this.runtimeService.startProcessInstanceByKey(processKey);
+		this.runtimeService.startProcessInstanceByKey(processKey);
+		assertEquals(4, this.taskService.createTaskQuery().active().list().size());
+		
+		// complete two tasks to ready for the api to be called  and responses asserted 
+		this.taskService.createTaskQuery().active().list().parallelStream()
+				.forEach((task) -> this.taskService.complete(task.getId()));
+		
+		this.runtimeService.signalEventReceived("processScope");		
+
+		assertEquals(0, this.taskService.createTaskQuery().active().list().size());
+		
+		this.runtimeService.signalEventReceived("globaleScope");
+		assertEquals(2, this.taskService.createTaskQuery().active().list().size());
 		
 	}
 
