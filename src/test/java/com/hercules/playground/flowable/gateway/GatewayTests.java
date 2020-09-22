@@ -22,9 +22,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Template Testing,
- * </br>
+ * <br>
  * For this to work there are two things
- * </br>
+ * <br>
  * 1. Your bpnm file needs to be on the class path 2. The bpnm file needs to be
  * named as testClassName.testMethod.bpmn20.xml
  * 
@@ -47,7 +47,7 @@ public class GatewayTests {
 
 	/**
 	 * Question: When two or more executions combine, What happens to the process variables?
-	 * </br>
+	 * <br>
 	 *  Answer:
 	 *  They all get combined
 	 *  Latest tasks process variables will overwrite tasks process variables that have gone before 
