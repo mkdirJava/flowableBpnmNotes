@@ -19,8 +19,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Template Testing, </br>
- * For this to work there are two things </br>
+ * Template Testing,
+ * <br>
+ *     For this to work there are two things
+ * <br>
  * 1. Your bpnm file needs to be on the class path 2. The bpnm file needs to be
  * named as testClassName.testMethod.bpmn20.xmlfinding
  * 

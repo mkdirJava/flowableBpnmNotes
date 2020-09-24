@@ -17,8 +17,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Template Testing, </br>
- * For this to work there are two things </br>
+ * <br>
+ *     Template Testing,
+ * <br>
+ * <br>
+ *     For this to work there are two things
+ * <br>
  * 1. Your bpnm file needs to be on the class path 2. The bpnm file needs to be
  * named as testClassName.testMethod.bpmn20.xmlfinding
  * 
@@ -40,7 +44,9 @@ public class MessageEvents {
 	}
 
 	/**
-	 * Question Can you wait a process until another finishes? </br>
+	 * <br>
+	 *     Question Can you wait a process until another finishes?
+	 * <br>
 	 * Answer Yes, make the dependant process wait upon a intermediate catching
 	 * event, have the effective path throw the event based upon the intermediate
 	 * throws event, this will co-ordinate the effect
@@ -85,7 +91,9 @@ public class MessageEvents {
 	}
 
 	/**
-	 * Question Can you start a subprocess with an event? </br>
+	 * <br>
+	 *     Question Can you start a subprocess with an event?
+	 * <br>
 	 * Answer: Yes you can provided that it is inside a structural event process
 	 * 
 	 * Be careful as this becomes totally independent, it might be better for a
@@ -111,17 +119,22 @@ public class MessageEvents {
 	}
 
 	/**
-	 * Question: Given multiple processes of the same definition, a signal will
-	 * notify all process, How to only notify one? </br>
-	 * 
-	 * Answer: By the documentation / Thread</br>
-	 * https://forum.flowable.org/t/message-end-events-or-message-throwing-events/312/5
-	 * </br>
+	 * <br>
+		 * Question: Given multiple processes of the same definition, a signal will
+		 * notify all process, How to only notify one?
+	 * <br>
+	 *
+	 * <br>
+	 * 	Answer: By the documentation / Thread
+	 * <br>
+	 * <br>
+	 *     https://forum.flowable.org/t/message-end-events-or-message-throwing-events/312/5
+	 * <br>
 	 * The way to do this would to apply the scope to the signal What it is found
 	 * is: if you call signalEventReceived without an executionId then it is global
 	 * so all are active processes will be affected if you call signalEventReceived
 	 * with an executionId then it is process scoped so only the processes where it
-	 * has the execution Id will be affected </br>
+	 * has the execution Id will be affected <br>
 	 * This is very strange, as this concern I believe is documented as a message
 	 * event but flowable repurposed signals with scope to handle it yet the signals
 	 * scope is not having an effect programmatically.
