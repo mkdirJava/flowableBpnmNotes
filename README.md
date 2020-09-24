@@ -1,6 +1,10 @@
 
 Hercules Flowable playground
 
+### interesting findings
+The below link is a list of useful commands used in expressions along with their meaning behind them
+https://flowable.com/open-source/docs/bpmn/ch04-API/#expression-functions
+
 This project is here to demonstrate and concrete knowledge on flowable bpmn uses.
 
 The project is structured as tests per bpmn component with unit tests and documentation.
