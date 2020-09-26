@@ -21,7 +21,7 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B javadoc:test-javadoc --file pom.xml
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
       with:
