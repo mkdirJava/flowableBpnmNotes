@@ -22,3 +22,8 @@ jobs:
         java-version: 11
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - uses: and-cru/actions-s3-static-upload@v12
+      with:
+        s3-bucket-name: flowable-bpnm-notes
+        # Build folder to upload
+        folder: /
